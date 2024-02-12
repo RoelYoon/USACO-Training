@@ -24,7 +24,7 @@ int main(){
                     cited[j]=true;
                     L--;
                     j++;
-                }if(j>n){j--;}
+                }if(j>=n){j--;}
                 if(c[i]<h || c[j]<h || c[n-1]<h){
                     break;
                 }
