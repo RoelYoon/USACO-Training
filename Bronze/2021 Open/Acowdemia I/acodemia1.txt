@@ -1,0 +1,10 @@
+Greedy solution. O(n).
+
+Followed this very simple algorithm:
+- sort
+- traverse greatest to least while incrementing h every iteration
+- keep iterating until we find some c_i which is less than the current h.
+From this index, traverse through all the past c values and try incrementing any which are
+less than the current h (if they have not been incremented before). 
+If any c values are still less than h after this or we run out of additional citations we can make
+(L) before incrementing all lower c values, the current h is the limit. 
