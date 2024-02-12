@@ -1,0 +1,8 @@
+Ad-hoc solution. O(n^2)
+
+For every color, find its largest original rectangle. Then, iterate through the "pixels" of the
+theoretical rectangle and note any colors that are not the current color in this rectangle. 
+Observe that these detected colors could not have been the first to be painted because they are blocking 
+some other rectangle.
+
+Count how many colors are possible candidates after doing the process above.

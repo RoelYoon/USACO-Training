@@ -1,0 +1,12 @@
+Greedy solution. O(n+m)
+
+Place all the given k cow positions first. Then find placements for the cows in the heirarchy greedily by
+placing them as far to the right as possible (while taking already-placed cows into consideration).
+
+If cow 1 is not in the heirarchy, the problem is already solved by simply finding the left-most free space
+in the line. However, the problem becomes more complicated if cow 1 is included in the heirarchy. Then, 
+we have done the opposite of what we want—we have placed cow 1 in the right-most position possible. 
+
+In this case, we must recalculate the positons of cow 1 and all the cows below cow 1 in the heirarchy. 
+The same greedy algorithm from before can be modified to place these cows as far to the left as
+possible (remember to watch out for the "locked" cows which must be placed where they are currently placed).

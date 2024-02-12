@@ -1,0 +1,4 @@
+Brute force soltion. O(1).
+
+Simply generate every possible sequence FJ could have gone through and count the unique outputs.
+Easy to do recursively.

@@ -1,0 +1,4 @@
+Simple DP problem. O(1)
+
+Make the observation that promotion[i]=final[i]-(initial[i]-promotion[i+1]), 
+and the problem is solved. 

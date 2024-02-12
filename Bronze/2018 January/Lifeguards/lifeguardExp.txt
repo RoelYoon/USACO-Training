@@ -1,0 +1,8 @@
+Brute force solution. O(n^2)
+
+Simulate "firing" each lifeguard, and calculate the coverage times. Find the maximum among
+these coverage times. 
+
+You can calculate the coverage time given a set of shifts of lifeguards by sweeping over
+the time points in O(n) (O(n*logn) for initially sorting). Do this sweep calculation for 
+every possible set of shifts of lifeguards after firing exactly one lifeguard. 

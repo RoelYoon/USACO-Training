@@ -1,0 +1,3 @@
+Simulation solution. O(1).
+
+No special algorithm or data structure. Simply simulate the situation described in the problem.

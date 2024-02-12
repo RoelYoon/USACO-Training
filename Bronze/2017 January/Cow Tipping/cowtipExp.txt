@@ -1,0 +1,9 @@
+*This was written after solving this problem a long time ago. Don't remember my exact thought process.
+Greedy simulation solution. O(n^4)
+
+Take the greedy approach of always flipping the farthest tipped cow from the upper-left corner until no 
+cows are tipped. Count how many times a flip is performed.
+
+We have to get to all tipped cows eventually, and cows farthest from the upper-left corner affect the 
+most cows, possibly messing up any corrections, so it is logical that we must flip the farthest cows 
+first before making any corrections in other cows.

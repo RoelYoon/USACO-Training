@@ -1,0 +1,8 @@
+Simulation solution. O(n*m*k^2)
+
+Simulate expanding the signal k units both horizontally and vertically.
+Essentially, for every "pixel" of the original signal, copy the pixel to a k*k 
+area in the output signal.
+
+This effect can be achieved by simply keeping a separate set of row and column 
+pointers to the original signal pattern that iterate k times as slow.

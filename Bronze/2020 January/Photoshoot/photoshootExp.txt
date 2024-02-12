@@ -1,0 +1,8 @@
+DP / Brute force solution. O(n^2).
+
+Observe that when given the sequence b_1, b_2, b_3... b_{n-1}, the value of a_i for any i<n is
+b_{i-(1-(i%2))} - a_{i-1}. This means given just a_1, you can calculate all other a values in
+O(n). 
+
+So simply iterate through all possible values of a_1 in lexicographical order and print the first
+possible permutation. 

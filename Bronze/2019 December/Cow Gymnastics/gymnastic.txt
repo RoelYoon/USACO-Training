@@ -1,0 +1,45 @@
+/*
+ID: roelyoon
+TASK: name
+LANG: C++                 
+*/
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    freopen("gymnastics.in","r",stdin);
+    freopen("gymnastics.out","w",stdout);
+    int k,n;
+    cin >> k >> n;
+    vector< vector<unordered_set<int> > > rankings(k, vector<unordered_set<int> > (n));
+    for(int row = 0; row < k; row++){
+        int order[25];
+        for(int j = 0; j < n; j++){
+            cin>>order[j];
+            order[j]-=1;;
+        }
+        for(int cow = 0; cow < n; cow++){
+            for(int lowerRankCow = cow+1; lowerRankCow<n; lowerRankCow++){
+                rankings[row][order[cow]].insert(order[lowerRankCow]);
+            }
+        }
+    }
+    int countPairs=0;
+    for(int p1 = 0; p1<n; p1++){
+        for(int p2=0; p2<n; p2++){
+            bool allMatch=true;
+            for(int row = 0; row < k; row++){
+                if(rankings[row][p1].find(p2)==rankings[row][p1].end()){
+                    allMatch=false;
+                }
+            }
+            if(allMatch){
+                countPairs++;
+            }
+        }
+    }
+    cout<<countPairs;
+}

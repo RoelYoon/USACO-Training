@@ -1,0 +1,12 @@
+Simple geometry solution. O(1)
+
+Find the width & height of the intersection rectangle between the two billboards.
+
+Observe that in the case that either the width or height of this intersection matches that of
+the lawnmower billboard, we can eliminate the area of the intersection from the total area 
+needed. In every other case, the total area of the tarp needed is the whole area of the lawnmower 
+billboard. 
+
+There is only one edge case where this observation no longer holds: when the feed billboard
+partitions the view of the lawnmower billboard into two separate rectangles. In this case,
+the whole area of the lawnmower billboard is still needed even if the width or height matches.

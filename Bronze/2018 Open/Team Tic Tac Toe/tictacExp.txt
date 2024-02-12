@@ -1,0 +1,4 @@
+Brute force solution. O(1)
+
+Check every row, column, and diagonal for every letter and letter pair and count how many 
+of them are winning positions.

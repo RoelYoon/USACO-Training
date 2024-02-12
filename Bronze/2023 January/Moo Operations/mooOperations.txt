@@ -1,0 +1,42 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int findInvalid(string &str,bool reverse){
+    string pattern=reverse?"OOM":"MOO";
+    int ind = 0; 
+    for(int i = reverse?str.size()-1:0; (reverse?(i>=0):(i<str.size())); reverse?i--:i++){
+        if(str[i]!=pattern[ind])
+            return i;
+        ind=(ind+1)%3; 
+    }
+    return 200;
+}
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int n;
+    cin>>n;
+    for(int i = 0; i < n; i++){
+        string str; cin>>str;
+        int ind=0,moves=0;
+        while(ind!=200&&str.size()>2){
+            ind=findInvalid(str,0); if(ind==200){break;}
+            int indR=findInvalid(str,1)+1;
+            if(str[0]=='O'){
+                str[0]='M';
+                moves++;
+            }else if(str[str.size()-1]=='M'){
+                str[str.size()-1]='O';
+                moves++;
+            }
+            else if(ind<(str.size()-indR-1)){
+                str=str.substr(ind);
+                moves+=ind;
+            }else{
+                moves+=str.size()-indR-1; 
+                str=str.substr(0,indR+1); 
+            }
+        }
+        cout<<(str.size()<3?-1:moves)<<"\n"; 
+    }
+}

@@ -1,0 +1,23 @@
+Graph solution. O(n)
+Construct a tree containing nodes of the following form:
+struct Cow{
+    string name;
+    Cow* parent;
+    unordered_set<string> children;
+}
+
+This tree structure allows us to determine any family relationships using simple algorithms.
+
+The sibling check can be performed in O(1) by simply following one parent pointer and searching
+the set of the parent's children. 
+
+The parent check is essentially a linked list traversal up the parent pointers. 
+
+The aunt check is the same as the parent check traversal except it checks the children set at 
+each level. 
+
+In the case that all of these checks are false, do one DFS from the root node of the tree
+to determine if the two cows are even in the same tree. If they are, then they are related and
+hence are cousins. If not, they are simply not related. 
+
+The code length could be significantly reduced, but I will just leave it since it works.

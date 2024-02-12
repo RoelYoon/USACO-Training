@@ -1,0 +1,3 @@
+Brute force solution. O(n^2)
+
+Simply simulate starting from every room, and find the minimum distance.

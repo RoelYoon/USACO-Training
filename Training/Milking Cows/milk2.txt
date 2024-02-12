@@ -1,0 +1,52 @@
+/*
+ID: roelyoon
+TASK: milk2
+LANG: C++                 
+*/
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+struct Interval{
+    int start;
+    int end;
+    Interval(){}
+    Interval(int s, int e): start(s), end(e){}
+};
+bool isOverlapping(Interval &a, Interval &b){
+    return b.start <= a.end;
+}
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    freopen("milk2.in","r",stdin);
+    freopen("milk2.out","w",stdout);
+    int n; cin>>n;
+    vector<Interval> intervals;
+    for(int i = 0; i < n; i++){
+        int a,b; cin>>a>>b;
+        intervals.push_back(Interval(a,b));
+    }
+    if(n==1){cout<<intervals[0].end-intervals[0].start<<" "<<0<<"\n";return 0;}
+    sort(intervals.begin(), intervals.end(), [](Interval &a, Interval &b){return a.start<b.start;});
+    int rightBound = intervals[0].end;
+    int maxMilk = rightBound-intervals[0].start;
+    int milkTime = maxMilk; 
+    int maxIdle = 0;
+    for(int i = 1; i < n; i++){
+        Interval cur = intervals[i];
+        if(cur.start<=rightBound && cur.end>rightBound){
+            milkTime+=cur.end-cur.start;
+            milkTime-=abs(rightBound-cur.start);
+            rightBound = cur.end;
+        }
+        else if(cur.start>rightBound){
+            maxIdle = max(maxIdle, cur.start-rightBound);
+            milkTime = cur.end-cur.start;
+            rightBound = cur.end; 
+        }
+        maxMilk = max(maxMilk, milkTime);
+    }
+    cout<<maxMilk<<" "<<maxIdle<<"\n";
+    return 0; 
+}

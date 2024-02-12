@@ -1,0 +1,5 @@
+Brute force solution. O(1)
+
+Consider all possible routes, and print the minimum distance.
+
+Possibly the easiest USACO problem ever.

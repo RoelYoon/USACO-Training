@@ -1,0 +1,112 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+//helper function to switch the rows and columns of a 2D array
+void switchRowCol(vector<string> &arr){
+    vector<string> result = arr;
+    for(int r = 0; r < arr.size(); r++){
+        for(int c= 0; c < arr[0].size(); c++){
+            result[c][r]=arr[r][c];
+        }
+    }
+    arr=result;
+}
+//helper function to reverse a string
+void reverseString(string &s){
+    string result = "";
+    for(int i = s.size()-1; i>=0; i--){
+        result+=s[i];
+    }
+    s=result;
+}
+//main algorithm
+void draw(vector<string> &grid, vector<string> &stamp, vector<string> &drawing,int r,int c){
+    //out of range check
+    if(r+stamp.size()-1 >= grid.size() || c+stamp[0].size()-1 >= grid[0].size()){
+        return;
+    }
+    //iterate through all possible rotations
+    for(int rotation = 0; rotation < 4; rotation++){
+        vector<string> rotatedStamp;
+        switch(rotation){
+            //no rotation
+            case 0:
+                rotatedStamp=stamp;
+                break;
+            //rows and columns switch then strings in each row are reversed
+            case 1:
+                rotatedStamp=stamp;
+                switchRowCol(rotatedStamp);
+                for(int i = 0; i < rotatedStamp.size(); i++)
+                    reverseString(rotatedStamp[i]);
+                break;
+            //order of rows is reversed then strings in each row are reversed
+            case 2:
+                for(int i = stamp.size()-1; i >=0; i--)
+                    rotatedStamp.push_back(stamp[i]);
+                for(int i = 0; i < rotatedStamp.size(); i++)
+                    reverseString(rotatedStamp[i]);
+                break;
+            //strings in each row are reversed then rows and columns are switched
+            case 3:
+                rotatedStamp=stamp;
+                for(int i = 0; i < rotatedStamp.size(); i++)
+                    reverseString(rotatedStamp[i]);
+                switchRowCol(rotatedStamp);
+                break;
+        }
+        bool mark = true;
+        for(int i = 0; i < stamp.size(); i++){
+            for(int j = 0; j < stamp[i].size(); j++){
+                if((grid[r+i][c+j]=='.' && rotatedStamp[i][j]=='*')){
+                    mark=false;
+                }
+            }
+        }
+        if(mark){
+            for(int i = 0; i < stamp.size(); i++){
+                for(int j = 0; j < stamp[0].size(); j++){
+                    if(drawing[r+i][c+j]!='*'){
+                        drawing[r+i][c+j]=rotatedStamp[i][j];
+                    }
+                }
+            }
+        }
+    }
+}
+int main(){
+    ios::sync_with_stdio(true);
+    cin.tie(0);
+    int t; 
+    cin>>t;
+    for(int test = 0; test < t; test++){
+        //input/setup
+        int n,k; 
+        cin>>n;
+        vector<string> grid(n);
+        string temp="";
+        for(int i = 0; i<n; i++){temp+=".";}
+        vector<string> drawing(n,temp);
+        for(int i = 0; i < n; i++)
+            cin>>grid[i];
+        cin>>k;
+        vector<string> stamp(k);
+        for(int i = 0; i < k; i++)
+            cin>>stamp[i];
+        /*
+        brute force. For every possible stamp position, 
+        draw with the stamp in every possible rotation as long as it
+        matches with the given painting. 
+        */
+        for(int r = 0; r < n; r++){
+            for(int c = 0; c < n; c++){
+                draw(grid,stamp,drawing,r,c);
+            }
+        }
+        //output
+        if(grid==drawing){cout<<"YES"<<"\n";}
+        else{cout<<"NO"<<"\n";}
+    }
+    return 0; 
+}

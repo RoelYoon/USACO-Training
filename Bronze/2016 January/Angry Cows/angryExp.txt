@@ -1,0 +1,4 @@
+Brute force solution. O(n^2)
+
+Simulate explosions from every haybale using a BFS-like approach, then
+find the maximum score among the simulated scores. 

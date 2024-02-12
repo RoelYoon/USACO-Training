@@ -1,0 +1,9 @@
+Brute force solution. O(n^2*m).
+
+Observe that if there are any shared characters at any base position between the spotty and plain cows, 
+then that base position could not explain spottiness by itself. 
+
+So, at every position (m), match every character from the spotty genomes to every character from the plain genomes
+and check if there are any overlaps (n^2 process). Count how many positions pass this check.
+
+Time complexity could be optimized to O(n*m) using hashtables.

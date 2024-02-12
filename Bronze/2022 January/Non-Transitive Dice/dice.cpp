@@ -1,0 +1,124 @@
+/*
+ID: roelyoon
+TASK: dice
+LANG: C++                 
+*/
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+struct dice{
+    vector<int> sides;
+    dice* lose;
+    dice* win;
+};
+//decides which dice has better chance of winning
+int win(dice a, dice b){
+    int aWin=0,bWin=0;
+    for(int i=0; i<4;i++){
+        for(int j=0;j<4;j++){
+            if(a.sides[i]>b.sides[j]){
+                aWin++;
+            } else if(b.sides[j]>a.sides[i]){
+                bWin++;
+            } 
+        }
+    }
+    if(aWin>bWin){
+        return 1; 
+    }else if(bWin>aWin){
+        return 2;
+    }else{
+        return 3;
+    }
+}
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int t; 
+    cin>>t;
+    for(int test=0; test < t; test++){
+        dice a,b,c;
+        bool possible=false;
+        //input
+        for(int i=0; i<8; i++){
+            int temp;
+            cin>>temp;
+            if(i<=3){a.sides.push_back(temp);}else{b.sides.push_back(temp);}
+        }
+        //nothing can beat a or b
+        if(a.sides[0]==10&&a.sides[1]==10&&a.sides[2]==10&&a.sides[3]==10){
+            cout<<"no\n";
+            continue;
+        }else if(b.sides[0]==10&&b.sides[1]==10&&b.sides[2]==10&&b.sides[3]==10){
+            cout<<"no\n";
+            continue;
+        }
+        //which wins
+        switch(win(a,b)){
+            case 1: //a win
+                a.win=&b;
+                b.lose=&a;
+                //c must lose to b, win a
+                for(int i1=1;i1<=10;i1++){
+                    for(int i2=1;i2<=10;i2++){
+                        for(int i3=1;i3<=10;i3++){
+                            for(int i4=1;i4<=10;i4++){
+                                c.sides.clear();
+                                c.sides.push_back(i1);
+                                c.sides.push_back(i2);
+                                c.sides.push_back(i3);
+                                c.sides.push_back(i4);
+                                if(win(b,c)==1 && win(a,c)==2){
+                                    possible=true;
+                                    break;
+                                }
+                            }
+                            if(possible){break;}
+                        }
+                        if(possible){break;}
+                    }
+                    if(possible){break;}
+                }
+                break;
+            case 2: //b win
+                a.lose=&b;
+                b.win=&a;
+                //c must lose to a, win b
+                for(int i1=1;i1<=10;i1++){
+                    for(int i2=1;i2<=10;i2++){
+                        for(int i3=1;i3<=10;i3++){
+                            for(int i4=1;i4<=10;i4++){
+                                c.sides.clear();
+                                c.sides.push_back(i1);
+                                c.sides.push_back(i2);
+                                c.sides.push_back(i3);
+                                c.sides.push_back(i4);
+                                if(win(a,c)==1&&win(b,c)==2){
+                                    possible=true;
+                                    break;
+                                }
+                            }
+                            if(possible){break;}
+                        }
+                        if(possible){break;}
+                    }
+                    if(possible){break;}
+                }
+                break;
+            case 3: //tie
+                possible=false;
+                break;
+        }
+        if(possible){
+            cout<<"yes\n";
+        }else{
+            cout<<"no\n";
+        }
+    }
+    return 0;
+}
+/*
+1
+4 5 6 7 2 4 5 10
+*/

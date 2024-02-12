@@ -1,0 +1,4 @@
+Brute force/simulation solution. O(n).
+
+Simulate the steps from every initial condition and find the maximum number of points among
+the simulations. 

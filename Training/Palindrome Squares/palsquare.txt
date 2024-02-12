@@ -1,0 +1,86 @@
+/*
+ID: roelyoon
+TASK: palsquare
+LANG: C++                 
+*/
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+#include <math.h>
+using namespace std;
+unordered_map<int, string> intToStr; 
+int vecToDec(vector<int> &num, int &base){
+    int dec = 0; 
+    int p=0; 
+    for(int i = 20; i >= 0; i--){
+        dec+=num[i]*pow(base,p);
+        p++;
+    }
+    return dec;
+}
+vector<int> decToVec(int num, int &base){
+    vector<int> vec(21);
+    int p = 20; 
+    int i = 0;
+    while(num>0){
+        while(pow(base,p)>num){
+            i++;
+            p--;
+        }
+        while(num>=pow(base,p)){
+            vec[i]++;
+            num-=pow(base,p);
+        }
+    }
+    return vec; 
+}
+void addOne(vector<int> &num, int &base, int place){
+    if(num[place]+1 >= base){
+        num[place]=0;
+        addOne(num,base,place-1);
+    }else{
+        num[place]++;
+    }
+}
+vector<int> squared(vector<int> &num, int &base){
+    int dec = vecToDec(num,base);
+    dec*=dec;
+    return decToVec(dec,base);
+}
+string toString(vector<int> &num){
+    string s = "";
+    int ind; 
+    for(int i = 0; i < num.size(); i++){
+        if(num[i]!=0){
+            ind = i; 
+            break;
+        }
+    }
+    for(int i = ind; i < num.size(); i++)
+        s+=(num[i]<10 ? to_string(num[i]) : intToStr.find(num[i])->second);
+    return s; 
+}
+bool isPalindrome(vector<int> &num){
+    string s = toString(num); 
+    for(int i = 0; i < s.size()/2; i++){
+        if(s[i]!=s[s.size()-1-i]){
+            return false;
+        }
+    }
+    return true;
+}
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    freopen("palsquare.in","r",stdin);
+    freopen("palsquare.out","w",stdout);
+    int base; cin>>base;
+    intToStr = {{10,"A"},{11,"B"},{12,"C"},{13,"D"},{14,"E"},{15,"F"},{16,"G"},{17,"H"},{18,"I"},{19,"J"},{20,"K"}};
+    vector<int> num(21);
+    num[20]=1; 
+    for(int i = 0; i < 299; i++){  
+        vector<int> square = squared(num,base); 
+        if(isPalindrome(square)){cout<<toString(num)<<" "<<toString(square)<<"\n";}
+        addOne(num,base,20);
+    }
+}

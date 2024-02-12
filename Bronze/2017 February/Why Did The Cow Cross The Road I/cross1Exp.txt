@@ -1,0 +1,5 @@
+Ad-hoc solution. O(n).
+
+Count how many times a cow changes its position in a linear traversal of the logs.
+
+Why can't they all be this easy?

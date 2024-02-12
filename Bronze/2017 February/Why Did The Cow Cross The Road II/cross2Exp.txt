@@ -1,0 +1,13 @@
+Ad-hoc solution. O(1).
+
+Let a1 and a2 be the crossing points of some cow A and let b1 and b2 be the crossing points of some cow B.
+Observe that cows A and B must be crossing pairs if their crossing points come in any rotated order of 
+(a1, b1, a2, b2).
+
+Above pattern regex notation:
+^(?!.*(?:a1[^b1]|b1[^a2]|a2[^b2]|b2[^a1]))\d{4}$
+
+For each cow, identify the two crossing points. Then do one clockwise traversal and one counterclockwise 
+traversal between the points. In each traversal, mark any letters you come across only ONCE as a pair.
+If you across the same letter twice, it is not a pair. Count the pairs you found, and record each found pair
+so that they are not counted twice.

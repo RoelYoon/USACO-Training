@@ -1,0 +1,4 @@
+Brute force solution. O(n).
+
+Generate all possible mappings of gestures to the numbers, then count the number of victories for each
+mapping. Find the maximum among these counts. 

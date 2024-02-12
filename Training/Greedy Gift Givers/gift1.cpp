@@ -1,0 +1,40 @@
+/*
+ID: roelyoon
+TASK: gift1
+LANG: C++                 
+*/
+#include <iostream>
+#include <unordered_map>
+#include <string>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    //freopen("gift1.in","r",stdin);
+    //freopen("gift1.out","w",stdout);
+    string names[100];
+    unordered_map<string, int> map;
+    int originalN,n=-1, amount=-1;
+    cin>>n;
+    originalN=n;
+    for(int i = 0; i < n; i++){
+        string temp;
+        cin>>temp;
+        map[temp] = 0;
+        names[i]=temp;
+    }
+    for(int j = 0; j<originalN; j++){
+        string giver;
+        cin>>giver>>amount>>n;
+        for(int i = 0; i < n; i++){
+            string temp; 
+            cin>>temp;
+            map[temp]+=amount/n;
+        }
+        if(n!=0){map[giver]-=(amount-amount%n);}
+        else{map[giver]+=amount;}
+    }
+    for(int i = 0; i < originalN; i++){
+        cout<<names[i]<<" "<<map.at(names[i])<<"\n";
+    }
+}

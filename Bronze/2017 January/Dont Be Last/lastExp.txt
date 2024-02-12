@@ -1,0 +1,6 @@
+Adh-hoc solution. O(n)
+
+Maintain a mapping of each cow to its total milk production in an unordered map (hashmap).
+
+Find the cow with the minimum production, then find the cow with the second minimum production in two
+linear traversals through the cows. Finally, check for ties in a third trvaersal.

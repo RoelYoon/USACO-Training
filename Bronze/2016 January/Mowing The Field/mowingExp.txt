@@ -1,0 +1,12 @@
+Simulation solution. O(n*t)
+
+Simply simulate the "mowing" while keeping a map of (visited coordinates : last time visited).
+When coming across an already-visited coordinate, calculate the minimum time that meets
+the problem condition with (currentTime - coordinate.lastTimeVisited). Find the maximum of
+these minimum times. 
+
+Partial solution uses a 2D array of 1005x1005. Fails on test case 3 most likely because the coordinates
+go out of range. Increasing the 2D array size results in exceeded stack memory. 
+
+Full solution uses an unordered map instead of a 2D array. A vector on heap memory may have worked
+as well, though there might have been ME. 

@@ -1,0 +1,6 @@
+Simulation solution. O(n*logn).
+
+Sort the logs chronologically (n*logn process), then simulate the changes recorded in the log
+in order. After updating the cow's production, update the current display according to the 
+rules described in the problem. Finally, check if the display changed from its state before
+applying the change. If so, increment the count by 1.

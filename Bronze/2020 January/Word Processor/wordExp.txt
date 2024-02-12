@@ -1,0 +1,5 @@
+Simulation solution. O(n) 
+
+SImply simulat the situation described in the problem.
+
+(*I suspect the string operations used here are not optimal. Will look into it in the future.)

@@ -1,0 +1,10 @@
+Math (basic geometry) solution. O(n*logn) (could be done in linear time without sorting)
+
+Find the primary extrema cows (right-most, left-most, highest, lowest) then the secondary 
+extrema cows (second right-most, second left-most, etc.). I did this by sorting the cows
+then accessing the ends of the sorted vector, but a simple linear traversal or possibly 
+two linear traversals with a little bit of logic could find all these extrema points in 
+linear time. 
+
+After finding these extrema points, simulate removing each of the primary extrema cows and 
+replacing it with the secndary extrema cow, and find the minimum of the resulting areas.

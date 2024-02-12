@@ -1,0 +1,4 @@
+Brute force solution. O(n^3)
+
+For every possible pair of horizontal and vertical lines (n^2 pairs), calculate the maximum
+cows in a single quadrant (n operation process), then find the minimum among these maximums. 

@@ -1,0 +1,10 @@
+Ad-hoc solution. O(n).
+
+Make the observation that for any word pair p, any counts p contributes to the final count for 
+any letter l can be modeled by max(p.word1.numOfOccurences(l), p.word2.numOfOccurences(l)). 
+
+For each letter l, the total count is:
+(Sum from i=0 to i=n): max(pairs[i].word1.numOfOccurences(l), pairs[i].word2.numOfOccurences(l)).
+
+Above in latex: 
+$\sum_{i=0}^{n-1} max(pairs[i].word1.numOfOccurences(l), pairs[i].word2.numOfOccurences(l))$

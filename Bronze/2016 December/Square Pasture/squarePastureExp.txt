@@ -1,0 +1,4 @@
+Math (basic geometry) solution. O(1).
+
+Find which between the horizontal or vertical edges of the theoretical square pasture
+is longer, then square that length. 

@@ -1,0 +1,5 @@
+Simulation solution. O(|x-y|)
+
+Simply simulate the situation described in the problem while keeping track of the total distance traveled.
+Obviously, don't simulate it to the extent of taking a single step every iteration. Skip to the destination
+every iteration, and check if the sheep must have been found on the way to the destination.

@@ -1,0 +1,11 @@
+Graph Ad-Hoc / DP Solution. Average O(n)
+
+I address two kinds of cases very differently. 
+Case 1: 
+The "normal" case where the given graph does NOT satisfy the property that vi = vi + 1.
+The algorithm first looks at the leaves of the tree and 
+
+Case 2: 
+The graph is a linear doubly-linked list. Though this case may be solved using the normal 
+method, it causes the worst-time time complexity and times out in some cases like test cases
+9 and 10, so I designed a completely new algorithm for this case.

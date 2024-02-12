@@ -1,0 +1,28 @@
+Sweep line/greedy solution. O(n)
+
+Create a timeline of events where an event is of the following form:
+
+struct Event{
+    int time;
+    bool isStart; 
+    int b;
+}
+
+The "isStart" attribute reprents whether the event indicates a start of a cow's milking session
+or the end of a cow's milking session.
+
+The "b" attribute represents the number of buckets needed by the cow with which the event is 
+associated. 
+
+Sweep through this timeline and follow the following greedy algorithm:
+
+if(event is end){
+    numberOfFreeBuckets += event.b;
+}else{
+    if(event.b > numberOfFreeBuckets){
+        totalBucketsUsed += (event.b-numberOfFreeBuckets);
+        numberOfFreeBuckets = 0;
+    }else{
+        numberOfFreeBuckets -= event.b;
+    }
+}

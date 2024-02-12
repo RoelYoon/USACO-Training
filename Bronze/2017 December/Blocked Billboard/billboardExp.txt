@@ -1,0 +1,8 @@
+Simple geometry solution. O(1).
+
+Use formula
+int width = (min(a.tr.x,b.tr.x)-max(a.bl.x,b.bl.x));
+int height = (min(a.tr.y,b.tr.y)-max(a.bl.y,b.bl.y));
+to find intersection areas. 
+
+That's about it.

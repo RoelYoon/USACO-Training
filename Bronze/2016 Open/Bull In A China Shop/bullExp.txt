@@ -1,0 +1,19 @@
+Brute force solution. O(n^(lol I can't even count)*k^2)
+
+The bounds that N <= 8 and K <= 10 warranted a pure brute force solution.
+
+For each piece, I simulate every possible offset and compare it to the original figurine.
+Since a piece can be shifted either horizontally or vertically at most n-1 characters, the number
+of every possible offset is only (n-1)*(n-1). 
+
+If a piece happens to "match" with the original in any of these offset versions, meaning
+all of its # characters are also # characters on the original, then the piece is temporarily
+considered the first match. 
+
+When the first match is made, a "negation" takes place where all the # characters of the original
+which coincide with the # characters of the first matched piece are erased by turning them into
+. characters. 
+
+The method used for finding the first match is used to find the second match on the negated version
+of the original figurine. Negate the second match from the already-negated figurine. Then, if 
+all characters in the final version are . characters, our solution is found.

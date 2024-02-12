@@ -1,0 +1,8 @@
+Ad-hoc solution. O(n*logn)
+
+Sort the cows by their arrival times. This has the same effect as inserting all the cows
+into a priority queue. 
+
+Traverse through the cows in order. If a cow's arrival time is higher than the current time variable,
+we "skip" the time to the cow's arrival time. Then, add the cow's time spent answering questions to 
+the time variable.

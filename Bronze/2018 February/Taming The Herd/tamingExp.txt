@@ -1,0 +1,11 @@
+Greedy solution. O(n)
+
+Uncover all the information you know. Position 0 always has the value 0 as given in the
+problem. Also, every time there is a number k at position i that is  not -1, you can deduce 
+that positions i-k to i have the values [0,k].
+
+The positions which still have the value -1 after all the "uncovering" are all the points which 
+could either be a breakout or a non-breakout. 
+
+The minimum case is where none of these are breakouts, and the maximum case is where all of these
+are breakouts.

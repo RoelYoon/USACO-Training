@@ -1,0 +1,8 @@
+Ad-Hoc solution. O(n^2*k)
+
+Observe that you can achieve the maximum number of yes queries by taking two cows which have
+the most number of characteristics in common and taking out the common characteristics one 
+by one until left with only unique characteristics, at which point you can ask one more query.
+
+So we only need to find the maximum number of common characteristics between any two cows by
+finding all pairs of cows (n^2) and going through their characteristic sets (size k). 

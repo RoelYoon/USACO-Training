@@ -1,0 +1,6 @@
+Brute force / simulation solution. 
+Time complexity: O(((M/min(x,y))*((M/min(x,y))+1))/2) = O((M/min(x,y))^2)
+(Using summation formula)
+
+Recursively simulate every possibility and look for the maximum fill size of M bucket. 
+Runs in O((M/min(x,y))^2) with memoization. 

@@ -1,0 +1,7 @@
+Ad-hoc solution. O(n^2)
+
+Sort the sizes, then iterate through each diamond and figure out how many diamonds larger than
+itself has a difference of <=k. Find the maximum among these counts.
+
+Feels similar to the naive string-search algorithm. Could probably be optimized to O(n) by 
+eliminating parts that are re-counted. 

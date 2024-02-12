@@ -1,0 +1,9 @@
+Ad-hoc solution. O(n*logn)
+
+Create a mapping of each position to its "origin position"—the position from which a cow must have shuffled from exactly 
+one shuffle ago O(n). 
+
+Maintain a mapping of each cow to its position. Iterate through each cow and update its position to the origin position
+of its current position. Repeat this three times O(3*n).
+
+Now, simply sort the cows by their position O(n*logn) then print them in order.
