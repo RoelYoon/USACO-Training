@@ -31,7 +31,7 @@ int main(){
                         maxScore--;
                     }
                 }
-            }
+            } 
         }
     }
     cout<<maxScore<<"\n";
