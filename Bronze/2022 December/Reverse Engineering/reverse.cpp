@@ -15,13 +15,15 @@ int main(){
             cin>>inputs[i]>>outputs[i];
         }
         const char bit[2]{'0','1'}; 
+        bool ignoreSet = 0;
+        do{
+        ignoreSet=0;
         for(int i = 0; i < n; i++){
             bool decidingVar = true;
             bool set = 0; 
             char setBit;
             for(int j = 0; j < 2; j++){
-                bool set = 0; 
-                char setBit;
+                set = 0; 
                 decidingVar = true;
                 for(int k = 0; k < m; k++){
                     if(ignore[k]){continue;}
@@ -41,11 +43,12 @@ int main(){
                     for(int k = 0; k < m; k++){
                         if(inputs[k][i]==bit[j]){
                             ignore[k]=true;
+                            ignoreSet=true;
                         }
                     }
                 }
             }
-        }
+        }}while(ignoreSet);
         bool possible = true;
         for(int i = 0; i < m; i++){
             if(!ignore[i]){
