@@ -1,95 +1,64 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 #define ll long long
 using namespace std;
-int n; 
+int ID = 0;
 struct Plant{
-    ll height;
-    ll growth;
-    ll other;
-    int id;
-    Plant(){}
-    void grow(){
-        height+=growth;
+    ll a;
+    ll b;
+    int id; 
+    Plant(){
+        cin>>a;
+        id = ID++;
     }
 };
-bool impossible(vector<Plant> &plants, int plant){
-    int tallerCount = 0;
-    for(int i = 0; i < n; i++){
-        if(i!=plant){
-            if(!(plants[i].height<plants[plant].height || plants[plant].growth > plants[i].growth || plants[plant].growth==plants[i].growth && plants[plant].height > plants[i].height)){
-                tallerCount++;
-            }
-            if(tallerCount==plants[plant].other){
-                return false;
-            }
-        }
-    }
-    return true;
-}
-int tries =0 ;
-int failurePlant=-1;
-bool satisfied(vector<Plant> &plants, bool& possible){
-   // static int failurePlant=-1;
-    //static int tries = 0;
-    for(int i = 0; i < n; i++){
-        if(i<n-1-plants[i].other){
-            if(plants[i].id==failurePlant){
-                tries++;
-            }
-            else{
-                failurePlant=plants[i].id;
-                tries=0;
-            }
-            return false;
-        }
-    }
-    return true;
-}
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int t;
-    cin>>t;
+    int t; cin>>t;
     while(t--){
-        cin>>n;
+        int n; cin>>n;
+        ll minDays = 0;
         vector<Plant> plants(n);
         for(int i = 0; i < n; i++){
-            cin>>plants[i].height;
-            plants[i].id=i;
+            cin>>plants[i].a;
         }
+        vector<ll> t(n);
         for(int i = 0; i < n; i++){
-            cin>>plants[i].growth;
+            cin>>t[i];
         }
+        bool impossible = false;
+        ll lowerBound = 0;
+        ll upperBound = 1000000000;
         for(int i = 0; i < n; i++){
-            cin>>plants[i].other;
-        }
-        sort(plants.begin(),plants.end(),[](Plant& a, Plant &b){return a.height<b.height;});
-        bool possible = true;
-        int days = 0;
-        int notChangeCount=0;
-        tries=0;
-        failurePlant=-1;
-        while(!satisfied(plants,possible)){
-            for(int i = 0; i < n; i++){
-                plants[i].grow();
+            for(int j = 0; j < n; j++){
+                if(i==j){continue;}
+                int a = plants[i].a;
+                int b = plants[i].b;
+                int c = plants[j].a;
+                int d = plants[j].b;
+                if(b==d){
+                    impossible=1;
+                    break;
+                }else if(b > d){
+                    upperBound = (c-a)/(b-d) - 1; 
+                }else if(b<d){
+                    lowerBound = (c-a)/(b-d) + 1;
+                }
             }
-            bool changed=false;
-            sort(plants.begin(),plants.end(),[&changed](Plant& a, Plant &b){if(!changed && a.height<b.height){changed=true;}return a.height<b.height;});
-            if(!changed){
-                notChangeCount++;
+            if(upperBound<lowerBound){
+                impossible=1;
+            }else if(upperBound==lowerBound){
+                minDays=lowerBound;
+                break;
             }
-            if(notChangeCount>10 || tries>1000){
-                possible=false;
+            if(impossible){
+                break;
             }
-            days++;
-            if(!possible){break;}
         }
-        if(possible){
-            cout<<days<<"\n";
-        }else{
-            cout<<-1<<"\n";
-        }
+        cout<<(impossible?-1:minDays)<<"\n";
+        ID=0;
     }
 }
