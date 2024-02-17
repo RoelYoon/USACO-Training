@@ -1,0 +1,8 @@
+Greedy solution. A rough worst-case time complexity analysis is O(n*max(h_i)), but in average cases
+is around O(n).
+
+Keep track of the minimum h, minH. Iterate through all h values and if h_i > minH, apply the 
+operation of decreasing h_i and h_{i+1} by d where d = h_i - minH. At any point if any h value
+becomes less than minH, replace the old minH and set the newMinSet flag variable. If this flag
+is set at the end of the traversal, restart the traversal using the same algorithm. If any h
+values become negative at any point, the case is impossible.  
