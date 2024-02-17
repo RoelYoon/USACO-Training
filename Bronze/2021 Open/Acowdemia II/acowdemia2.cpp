@@ -1,71 +1,54 @@
 #include <iostream>
-#include <unordered_map>
-#include <vector>
-#include <algorithm>
 #include <string>
+#include <algorithm>
+#include <vector>
+#include <unordered_map>
 using namespace std;
-void seniorDFS(vector<string> &answers,vector<vector<int>> &equalGraph, vector<bool> &visited, int &origin, int head){
-    if(visited[head]){return;}
-    visited[head]=true;
-    for(int i = 0; i < answers[head].size(); i++){
-        if(answers[head][i]=='1' && answers[origin][i]=='?'){
-            answers[origin][i]='1';
-            answers[i][origin]='0';
-        }
-    }
-    for(int i = 0; i < equalGraph[head].size(); i++){
-        seniorDFS(answers,equalGraph,visited,origin,equalGraph[head][i]);
-    }
-}
+int n,k;
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n,k; cin>>k>>n;
-    unordered_map<string,int> name2id; 
-    unordered_map<int, string> id2name;
-    unordered_map<int,int> id2order;
-    vector<string> names;
+    cin>>k>>n;
+    vector<string> names(n);
+    vector<string> nameSorted(n);
+    unordered_map<string, int> order;
+    unordered_map<string, int> nameMap;
     for(int i = 0; i < n; i++){
-        string temp; cin>>temp;
-        name2id.insert({temp,i});
-        id2name.insert({i,temp});
-        names.push_back(temp);
+        cin>>names[i];
+        nameSorted[i]=names[i];
+        nameMap.insert({names[i],i});
     }
-    sort(names.begin(),names.end());
+    sort(nameSorted.begin(),nameSorted.end());
     for(int i = 0; i < n; i++){
-        id2order.insert({name2id.find(names[i])->second,i});
+        order.insert({nameSorted[i],i});
     }
-    vector<string> answers(n);
-    vector<vector<int>> equalGraph(n);
+    vector<string> ans(n);
     for(int i = 0; i < n; i++){
-        string ans = "";
         for(int j = 0; j < n; j++){
-            ans+=(i==j?"B":"?");
-        }answers[i]=ans;
-    }
-    for(int i = 0; i < k; i++){
-        vector<int> pub(n);
-        for(int j = 0; j < n; j++){
-            string temp; cin>>temp;
-            int id = name2id.find(temp)->second;
-            for(int p = 0; p < pub.size(); p++){
-                if(id2order.find(id)->second < id2order.find(pub[p])->second){
-                    //cur id is senior of id p
-                    answers[id][pub[p]]='1';
-                    answers[pub[p]][id]='0';
-                }
-                if(answers[id][pub[p]]!='?'){
-                    equalGraph[id].push_back(pub[p]);
-                }
-            }
-            pub.push_back(name2id.find(temp)->second);
+            ans[i]+=(i==j?"B":"?");
         }
     }
-    for(int i = 0; i < n; i++){
-        vector<bool> visited(n,false);
-        seniorDFS(answers,equalGraph,visited,i,i);
+    vector<vector<string>> entries(k);
+    for(int i = 0; i < k; i++){
+        vector<string> entry(n);
+        for(int j = 0; j < n; j++){
+            cin>>entry[j];
+        }
+        int lastBroken = -1;
+        for(int j = 1; j < n; j++){
+            if(order[entry[j]] < order[entry[j-1]]){
+                //alphabetical ordering broken
+                lastBroken = j-1;
+            }
+            for(int k = lastBroken; k >= 0; k--){
+                ans[nameMap[entry[j]]][nameMap[entry[k]]]='1';
+                ans[nameMap[entry[k]]][nameMap[entry[j]]]='0';
+            }
+        }
+        entries[i] = entry;
     }
+    
     for(int i = 0; i < n; i++){
-        cout<<answers[i]<<"\n";
+        cout<<ans[i]<<"\n";
     }
 }
