@@ -1,0 +1,7 @@
+Greedy solution. O(n^2*k).
+
+For every entry:
+Iterate through the entry left to right. Any time the alphabetical ordering is broken, 
+flag that point as lastBroken. For every cow during the regular traversal, do a reverse 
+traversal from the current lastBroken to the beginning of the entry where you mark the 
+current cow as the senior to every cow in this reverse traversal. 
