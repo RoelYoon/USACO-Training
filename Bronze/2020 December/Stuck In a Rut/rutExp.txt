@@ -1,0 +1,10 @@
+DP solution. O(n^2)
+
+Given a pair of two cows a and b where a is heading east and b is heading north, you can easily
+tell in O(1) whether one blocks the other. A mostly correct naive solution is going through
+every pairing and finding where each cow gets blocked in O(n^2). Let a function call for finding 
+where some cow i gets blocked through this brute force process be findMax(i). However, this fails to 
+consider that in some pairing of two cows a and b where b blocks a, b may be blocked by some other cow 
+before it has a chance to ever block a. So when evaluating some pair a and b in findMax(a), we must 
+first call findMax(b) to see if b is blocked before their interaction. This is of course recursive,
+with the base case being when findMax(i) for some cow i is infinite, meaning cow i is never blocked.
