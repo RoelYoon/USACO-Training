@@ -1,55 +1,78 @@
-#include <stdio.h>
-#include <math.h>
-#include <unordered_map> 
-#include <limits.h>
-using namespace std; 
-typedef long long LL;
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#define ll long long
+#define MAX 100005
+using namespace std;
 int n;
-struct Cow{
-    int x;
-    int y;
-};
-int find(int (&unions)[100005], int head){
-    if(unions[head]==head){return head;}
-    int ans = find(unions,unions[head]);
-    unions[head] = ans;
-    return ans; 
-}
-void unite(int (&unions)[100005], int a, int b){
-    unions[b]=find(unions,a);
-}
-void Prim(Cow (&cows)[100005], unordered_map<int,int> &toInclude, int (&unions)[100005], LL& cost, int head,int depth){
-    if(toInclude.find(head)==toInclude.end() || depth==n-1){return;}
-    toInclude[head]--; 
-    if(toInclude[head]==0){toInclude.erase(head);}
-    Cow cur = cows[head]; 
-    LL minCost = LLONG_MAX;
-    int next = head;
-    for(unordered_map<int,int>::iterator it = toInclude.begin(); it!=toInclude.end(); it++){
-        int i = it->first; 
-        LL c = pow(abs(cur.x-cows[i].x),2) + pow(abs(cur.y-cows[i].y),2);
-        if(i!=head && c<minCost && find(unions,head)!=find(unions,i)){
-            minCost = c; 
-            next=i; 
+int xs[MAX];
+int ys[MAX];
+class UnionFind{
+    private:
+    int parents[MAX];
+    int ranks[MAX]{};
+    public:
+    UnionFind(){
+        for(int i = 0; i < n; i++){
+            parents[i]=i;
         }
     }
-    toInclude[next]--;
-    unite(unions,head,next);
-    cost+=minCost; 
-    printf("%d %d : %lld : %lld\n",head,next,minCost,cost);
-    Prim(cows,toInclude,unions,cost,next,depth+1);
-}
-int main(){
-    scanf("%d",&n);
-    Cow cows[100005];
-    int unions[100005]; 
-    unordered_map<int,int> toInclude; 
-    for(int i = 0; i < n; i++){
-        scanf("%d%d",&cows[i].x,&cows[i].y); //cin>>cows[i].x>>cows[i].y; 
-        toInclude.insert({i,2});
-        unions[i]=i;
+    int find(int a){
+        if(parents[a]==a){return a;}
+        return parents[a]=find(parents[a]);
     }
-    LL cost = 0;
-    Prim(cows,toInclude,unions,cost,0,0);
-    printf("%lld\n",cost); //cout<<cost-1<<"\n";
+    void merge(int a, int b){
+        a=find(a);
+        b=find(b);
+        if(ranks[a]<ranks[b]){
+            parents[a]=b;
+        }else if(ranks[a]>ranks[b]){
+            parents[b]=a;
+        }else{
+            parents[b]=a;
+            ranks[a]++;
+        }
+    }
+};
+inline ll cost(ll u, ll v){
+    return (ll)abs((ll)xs[u]-(ll)xs[v])*(ll)abs((ll)xs[u]-(ll)xs[v]) + (ll)abs((ll)ys[u]-(ll)ys[v])*(ll)abs((ll)ys[u]-(ll)ys[v]);
+}
+struct Edge{
+    int u;
+    int v;
+    ll c;
+    Edge(int u,int v):u(u),v(v){
+        c=cost(u,v);
+    } 
+    Edge():u(-1),v(-1),c(-1){}
+};
+int main(){
+    cin>>n;
+    UnionFind unions;
+    vector<int> cows(n);
+    for(int i = 0; i < n; i++){
+        cin>>xs[i]>>ys[i];
+        cows[i]=i;
+    }
+    sort(cows.begin(),cows.end(),[](const int &a, const int &b){return xs[a]>xs[b];});
+    ll totalCost=0;
+    vector<Edge> edges;
+    int deg = 25;
+    for(int i = 0; i < n; i++){
+        for(int j = i; j < i+deg && j < n; j++){
+            edges.push_back(Edge(cows[i],cows[j]));
+        }
+        for(int j = i; j >= i-deg && j>=0; j--){
+            edges.push_back(Edge(cows[i],cows[j]));
+        }
+    }
+    sort(edges.begin(),edges.end(),[](const Edge &a, const Edge &b){return a.c < b.c;});
+    int numTaken = 0;
+    for(Edge &e : edges){
+        if(unions.find(e.u)==unions.find(e.v)){continue;}
+        unions.merge(e.u,e.v);
+        totalCost+=e.c;
+        if(++numTaken==n-1){break;}
+    }
+    cout<<totalCost<<"\n";
 }
