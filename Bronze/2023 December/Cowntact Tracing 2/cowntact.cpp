@@ -1,84 +1,48 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-int n;
-string line;
-int minMaxNights=1000000000;
 struct Blob{
-    int size;
+    int sz;
+    int start;
+    int end;
     bool edge;
-    bool end; 
-    int maxNights;
-    Blob(int s,bool e,bool ed):size(s),edge(e),end(ed){
-        maxNights=0;
-        if(!edge){
-            maxNights+=(s%2==0?(s-2)/2:(s-1)/2);
-        }else{
-            maxNights=s-1;
-        }
-        if(maxNights<minMaxNights){
-            minMaxNights=maxNights;
-        }
-    }
-    int rollBackCount(int nights,int sizeSeg, bool isEdge,bool hasSplit){
-        if(isEdge && size%2==1 && hasSplit){sizeSeg++;}
-        if(isEdge){
-            if(nights>=sizeSeg/2){
-                sizeSeg=1;
-            }else if(sizeSeg-nights*2>0){
-                sizeSeg-=(nights*2);
-            }else{
-                sizeSeg-=nights;
-            }
-        }else{
-            sizeSeg-=2*nights;
-        }
-        return sizeSeg;
-    }
-    int rollBack(int nights){
-        int sizeCount=0;
-        int sizeCopy=size;
-        int segCount=1;
-        while((sizeCopy/2-(nights*2))>0){
-            segCount*=2;
-            sizeCopy/=2;
-        }
-        for(int i = 0; i < segCount; i++){
-            sizeCount+=rollBackCount(nights,size/segCount,edge?(end?(i==segCount-1?true:false):(edge&&i==0?true:false)):i==0?true:false,segCount!=1);
-        }
-        return sizeCount;
+    Blob(){}
+    Blob(int s, int e):sz(s),end(e),edge(0){
+        start=end-(sz-1);
     }
 };
 int main(){
-    ios::sync_with_stdio(false);
+    ios::sync_with_stdio(0);
     cin.tie(0);
-    cin>>n>>line;
-    vector<Blob> blobs;
-    //find blobs
-    int cnt=0;
-    bool isBlob=false;
-    bool edge=line[0]=='1';
-    for(int i = 0; i < n; i++){
-        if(line[i]=='1'){
-            cnt++;
-            isBlob=true;
-            if(i==n-1){
-                blobs.push_back(Blob(cnt,true,true));
-            }
-        }else if(isBlob){
-            if(edge){
-                blobs.push_back(Blob(cnt,true,false));
-                edge=false;
-            }else{
-                blobs.push_back(Blob(cnt,false,false));
-            }
+    int n; cin>>n;
+    vector<Blob> bs;
+    string s; cin>>s;
+    int cnt = 0;
+    for(int i = 0; i < n; ++i){
+        if(s[i]=='1'){
+            ++cnt;
+        }else if(cnt>0){
+            bs.emplace_back(cnt,i-1);
             cnt=0;
-            isBlob=false;
+        }
+    }if(cnt>0) bs.emplace_back(cnt,n-1);
+    if(bs.empty()){cout<<"0\n"; return 0;}
+    bs[0].edge = s[bs[0].start] == '1';
+    bs[bs.size()-1].edge = s[bs[bs.size()-1].end] == '1';
+    if(bs.size()==1 && bs[0].edge){
+        cout<<"1\n";
+        return 0;
+    }
+    int maxNights = 1000000000; //day FJ reports on the sickness
+    for (int i = 0; i < bs.size(); ++i) {
+        if (bs[i].start == 0 || bs[i].end == n-1) {
+            maxNights = min(maxNights,bs[i].sz);
+        } else {
+            maxNights = min(maxNights,(bs[i].sz+1)/2);
         }
     }
-    int minInfectionCnt=0;
-    for(int i = 0; i < blobs.size(); i++){
-        minInfectionCnt+= blobs[i].rollBack(minMaxNights);
-    }
-    cout<<minInfectionCnt<<"\n";
+    int minCows = 0;
+    for (int i = 0; i < bs.size(); ++i)
+        minCows += (bs[i].sz + 2*maxNights-2)/(2*maxNights-1);
+    cout<<minCows<<"\n";
 }
