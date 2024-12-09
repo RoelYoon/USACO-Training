@@ -58,6 +58,9 @@ int main(){
             t++;
         }
     }
-    cout<<(met?maxT:-1)<<"\n";
+    if(!met && pos.x==0 && pos.y==0)
+        cout<<t<<"\n";
+    else
+        cout<<(met?maxT:-1)<<"\n";
 }
 
